@@ -1,0 +1,28 @@
+# 敏感文件（含外部路径）
+test_asset_generator.py
+
+# 依赖
+node_modules/
+
+# 输出
+output/
+
+# Claude 配置
+.claude/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+npm-debug.log*
+
+# 构建产物
+dist/
+build/

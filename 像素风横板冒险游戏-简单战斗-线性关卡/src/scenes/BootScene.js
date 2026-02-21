@@ -12,7 +12,7 @@ import { PlaceholderFactory } from '../systems/PlaceholderFactory.js';
 
 // 素材模式配置 - 由 asset_replacer.py 自动更新
 // 初始为 false (占位符模式)，素材生成后改为 true
-const useRealAssets = false; // 切换到占位符模式，动画流畅
+const useRealAssets = true; // 启用真实素材模式
 
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -107,11 +107,15 @@ export class BootScene extends Phaser.Scene {
     this.load.image('bg-far', 'assets/images/background.png');
     this.load.image('bg-near', 'assets/images/background.png');
 
-    // Audio - 注释掉直到音频文件生成
-    // this.load.audio('jump', 'assets/audio/jump.mp3');
-    // this.load.audio('collect', 'assets/audio/collect.mp3');
-    // this.load.audio('gameover', 'assets/audio/gameover.mp3');
-    // this.load.audio('bgm', 'assets/audio/bgm.mp3');
+    // Audio - 加载生成的音效
+    this.load.audio('jump', 'assets/audio/jump.wav');
+    this.load.audio('attack', 'assets/audio/attack.wav');
+    this.load.audio('hit', 'assets/audio/hit.wav');
+    this.load.audio('coin', 'assets/audio/coin.wav');
+    this.load.audio('heal', 'assets/audio/heal.wav');
+    this.load.audio('hurt', 'assets/audio/hurt.wav');
+    this.load.audio('death', 'assets/audio/death.wav');
+    this.load.audio('menu_select', 'assets/audio/menu_select.wav');
   }
 
   create() {

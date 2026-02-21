@@ -151,6 +151,11 @@ export class CollectibleSystem {
     this.score += GameConfig.collectibles.coin.value;
     this.scene.events.emit(GameEvents.COIN_COLLECTED, this.score);
 
+    // 播放金币音效
+    if (this.scene.sound.get('coin')) {
+      this.scene.sound.play('coin', { volume: 0.5 });
+    }
+
     // Play effect
     this.playCollectEffect(coin.x, coin.y, 0xffdd00);
 
@@ -168,6 +173,11 @@ export class CollectibleSystem {
 
     // Heal player
     player.heal(GameConfig.collectibles.heart.healAmount);
+
+    // 播放回血音效
+    if (this.scene.sound.get('heal')) {
+      this.scene.sound.play('heal', { volume: 0.5 });
+    }
 
     // Play effect
     this.playCollectEffect(heart.x, heart.y, 0xff6666);

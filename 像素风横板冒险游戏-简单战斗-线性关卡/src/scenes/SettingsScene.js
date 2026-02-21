@@ -262,6 +262,11 @@ export class SettingsScene extends Phaser.Scene {
     });
 
     bg.on('pointerdown', () => {
+      // 播放选择音效
+      if (this.sound.get('menu_select')) {
+        this.sound.play('menu_select', { volume: 0.5 });
+      }
+
       value = !value;
       this.settings[settingKey] = value;
       SettingsManager.set(settingKey, value);
@@ -292,6 +297,11 @@ export class SettingsScene extends Phaser.Scene {
   }
 
   resetSettings() {
+    // 播放选择音效
+    if (this.sound.get('menu_select')) {
+      this.sound.play('menu_select', { volume: 0.5 });
+    }
+
     SettingsManager.reset();
     this.settings = SettingsManager.getSettings();
 
@@ -303,6 +313,11 @@ export class SettingsScene extends Phaser.Scene {
   }
 
   goBack() {
+    // 播放选择音效
+    if (this.sound.get('menu_select')) {
+      this.sound.play('menu_select', { volume: 0.5 });
+    }
+
     this.cameras.main.fade(150, 0, 0, 0);
     this.time.delayedCall(150, () => {
       this.scene.switch(this.returnScene);

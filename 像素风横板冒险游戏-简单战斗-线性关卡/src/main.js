@@ -23,7 +23,7 @@ const config = {
     default: 'arcade',
     arcade: {
       gravity: { y: GameConfig.gravity || 0 },
-      debug: GameConfig.debug || false
+      debug: GameConfig.debug?.showHitboxes || false
     }
   },
   scene: [

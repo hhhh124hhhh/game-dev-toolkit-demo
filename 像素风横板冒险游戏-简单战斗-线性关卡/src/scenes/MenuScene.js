@@ -113,6 +113,11 @@ export class MenuScene extends Phaser.Scene {
   }
 
   highlightButton(index) {
+    // 播放菜单选择音效（仅在切换时播放）
+    if (index !== this.selectedIndex && this.sound.get('menu_select')) {
+      this.sound.play('menu_select', { volume: 0.5 });
+    }
+
     this.menuButtons.forEach((button, i) => {
       const bg = button.bg;
       const label = button.label;
@@ -136,6 +141,11 @@ export class MenuScene extends Phaser.Scene {
   }
 
   selectButton(scene, key) {
+    // 播放确认音效
+    if (this.sound.get('menu_select')) {
+      this.sound.play('menu_select', { volume: 0.6 });
+    }
+
     this.cameras.main.fade(200, 0, 0, 0);
 
     this.time.delayedCall(200, () => {

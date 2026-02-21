@@ -75,6 +75,9 @@ export class PlaceholderFactory {
     // 创建粒子占位符
     this.createSquare(scene, 'particle', defaultConfig.particle.size, defaultConfig.particle.color);
 
+    // 创建战斗效果粒子纹理
+    this.createCombatParticles(scene);
+
     // 创建背景纹理
     this.createBackgrounds(scene);
 
@@ -447,6 +450,40 @@ export class PlaceholderFactory {
       iconGraphics.generateTexture(`icon_${name}`, 32, 32);
       iconGraphics.destroy();
     });
+  }
+
+  /**
+   * 创建战斗效果粒子纹理
+   */
+  static createCombatParticles(scene) {
+    // 命中火花粒子 - 明亮的黄色/橙色
+    const sparkGraphics = scene.add.graphics();
+    sparkGraphics.fillStyle(0xffff00, 1);
+    sparkGraphics.fillCircle(4, 4, 4);
+    sparkGraphics.fillStyle(0xffffff, 0.8);
+    sparkGraphics.fillCircle(4, 4, 2);
+    sparkGraphics.generateTexture('hit_spark', 8, 8);
+    sparkGraphics.destroy();
+
+    // 斩击轨迹粒子 - 青色发光
+    const slashGraphics = scene.add.graphics();
+    slashGraphics.fillStyle(0x00ffff, 0.9);
+    slashGraphics.fillCircle(3, 3, 3);
+    slashGraphics.fillStyle(0xffffff, 0.6);
+    slashGraphics.fillCircle(3, 3, 1.5);
+    slashGraphics.generateTexture('slash_particle', 6, 6);
+    slashGraphics.destroy();
+
+    // 敌人击中效果 - 红色粒子
+    const enemyHitGraphics = scene.add.graphics();
+    enemyHitGraphics.fillStyle(0xff4444, 1);
+    enemyHitGraphics.fillCircle(5, 5, 5);
+    enemyHitGraphics.fillStyle(0xff8888, 0.7);
+    enemyHitGraphics.fillCircle(5, 5, 2);
+    enemyHitGraphics.generateTexture('enemy_hit_particle', 10, 10);
+    enemyHitGraphics.destroy();
+
+    console.log('[PlaceholderFactory] Created combat particle textures');
   }
 
   /**

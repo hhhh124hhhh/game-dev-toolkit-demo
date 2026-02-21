@@ -1,0 +1,19 @@
+{
+  "name": "match-3-game",
+  "version": "1.0.0",
+  "description": "消除游戏 - Match-3 Puzzle Game",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "phaser": "^3.70.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "vitest": "^1.6.0"
+  }
+}

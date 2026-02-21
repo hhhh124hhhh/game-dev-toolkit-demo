@@ -70,11 +70,31 @@ export class CombatSystem {
     // Apply damage
     enemy.takeDamage(GameConfig.combat.attackDamage, knockbackDir);
 
-    // Play hit effect
+    // 播放命中音效
+    if (this.scene.sound.get('hit')) {
+      this.scene.sound.play('hit', { volume: 0.5 });
+    }
+
+    // Play hit effect with enhanced particles
     this.playHitEffect(enemy.x, enemy.y);
 
-    // Camera shake
-    this.scene.cameras.main.shake(50, 0.005);
+    // Enhanced camera shake - stronger feedback
+    this.scene.cameras.main.shake(100, 0.01);
+
+    // Hit pause - brief freeze for impact feel
+    this.applyHitPause(50);
+  }
+
+  /**
+   * 击中暂停效果 - 短暂冻结增强打击感
+   */
+  applyHitPause(duration = 50) {
+    // 暂停物理和时间
+    this.scene.physics.pause();
+
+    this.scene.time.delayedCall(duration, () => {
+      this.scene.physics.resume();
+    });
   }
 
   // ============ Enemy Attack ============
@@ -98,7 +118,7 @@ export class CombatSystem {
 
   // ============ Effects ============
   playHitEffect(x, y) {
-    // Flash effect at hit location
+    // 1. Flash effect at hit location (保持原有闪光)
     const flash = this.scene.add.circle(x, y, 20, 0xffffff, 0.8);
 
     this.scene.tweens.add({
@@ -107,6 +127,59 @@ export class CombatSystem {
       scale: 1.5,
       duration: 150,
       onComplete: () => flash.destroy()
+    });
+
+    // 2. 命中火花粒子爆发
+    this.createHitParticles(x, y);
+
+    // 3. 冲击波环
+    this.createImpactRing(x, y);
+  }
+
+  /**
+   * 创建命中粒子爆发效果
+   */
+  createHitParticles(x, y) {
+    // 检查纹理是否存在
+    if (!this.scene.textures.exists('hit_spark')) {
+      return;
+    }
+
+    // 创建粒子发射器
+    const particles = this.scene.add.particles(x, y, 'hit_spark', {
+      speed: { min: 150, max: 400 },
+      angle: { min: 0, max: 360 },
+      scale: { start: 1.2, end: 0 },
+      alpha: { start: 1, end: 0 },
+      lifespan: 300,
+      quantity: 15,
+      blendMode: 'ADD',
+      emitting: false
+    });
+
+    // 一次性爆发
+    particles.explode(15);
+
+    // 自动销毁
+    this.scene.time.delayedCall(400, () => {
+      particles.destroy();
+    });
+  }
+
+  /**
+   * 创建冲击波环效果
+   */
+  createImpactRing(x, y) {
+    const ring = this.scene.add.circle(x, y, 10, 0xffffff, 0);
+    ring.setStrokeStyle(3, 0xffff00, 1);
+
+    this.scene.tweens.add({
+      targets: ring,
+      radius: 40,
+      alpha: 0,
+      duration: 200,
+      ease: 'Power2',
+      onComplete: () => ring.destroy()
     });
   }
 

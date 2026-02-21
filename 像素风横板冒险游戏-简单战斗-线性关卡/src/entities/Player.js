@@ -47,6 +47,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.attackCooldown = 0;
     this.attackHitbox = null;
 
+    // Projectile shooting
+    this.shootCooldown = 0;
+    this.shootCooldownTime = 300; // 300ms between shots
+    this.projectiles = null; // Will be set by GameScene
+
     // Invincibility
     this.isInvincible = false;
     this.invincibleTimer = 0;
@@ -232,6 +237,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.jumpBufferTime = 0;
     this.isJumping = true;
     this.stateMachine.setState(PlayerState.JUMPING);
+
+    // 播放跳跃音效
+    if (this.scene.sound.get('jump')) {
+      this.scene.sound.play('jump', { volume: 0.5 });
+    }
   }
 
   applyFasterFalling() {
@@ -255,6 +265,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.isAttacking = true;
     this.attackCooldown = GameConfig.combat.attackCooldown;
     this.stateMachine.setState(PlayerState.ATTACKING);
+
+    // 播放攻击音效
+    if (this.scene.sound.get('attack')) {
+      this.scene.sound.play('attack', { volume: 0.4 });
+    }
 
     // Create attack hitbox
     this.createAttackHitbox();
@@ -281,8 +296,67 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.physics.add.existing(this.attackHitbox);
     this.attackHitbox.body.setAllowGravity(false);
 
+    // 创建斩击轨迹效果
+    this.createSlashEffect(x, y);
+
     // Emit attack event for combat system to handle
     this.scene.events.emit('player:attack', this.attackHitbox);
+  }
+
+  /**
+   * 创建斩击轨迹视觉效果
+   */
+  createSlashEffect(x, y) {
+    // 检查纹理是否存在
+    if (!this.scene.textures.exists('slash_particle')) {
+      return;
+    }
+
+    // 创建斩击粒子发射器
+    const slashParticles = this.scene.add.particles(x, y, 'slash_particle', {
+      speed: { min: 100, max: 250 },
+      // 根据朝向设置角度范围
+      angle: this.flipX
+        ? { min: 150, max: 210 }  // 面向左
+        : { min: -30, max: 30 },  // 面向右
+      scale: { start: 1.5, end: 0 },
+      alpha: { start: 0.8, end: 0 },
+      lifespan: 180,
+      quantity: 12,
+      blendMode: 'ADD',
+      emitting: false
+    });
+
+    // 一次性爆发
+    slashParticles.explode(12);
+
+    // 创建斩击弧线
+    const arc = this.scene.add.graphics();
+    arc.lineStyle(3, 0x00ffff, 0.8);
+
+    // 根据朝向绘制弧线
+    if (this.flipX) {
+      arc.beginPath();
+      arc.arc(this.x, y, 40, Phaser.Math.DegToRad(150), Phaser.Math.DegToRad(210), false);
+      arc.strokePath();
+    } else {
+      arc.beginPath();
+      arc.arc(this.x, y, 40, Phaser.Math.DegToRad(-30), Phaser.Math.DegToRad(30), false);
+      arc.strokePath();
+    }
+
+    // 弧线淡出动画
+    this.scene.tweens.add({
+      targets: arc,
+      alpha: 0,
+      duration: 150,
+      onComplete: () => arc.destroy()
+    });
+
+    // 自动销毁粒子
+    this.scene.time.delayedCall(250, () => {
+      slashParticles.destroy();
+    });
   }
 
   destroyAttackHitbox() {
@@ -311,6 +385,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     console.log('[Player] Health after damage:', this.health);
     this.scene.events.emit(GameEvents.PLAYER_HURT, this.health);
 
+    // 播放受伤音效
+    if (this.scene.sound.get('hurt')) {
+      this.scene.sound.play('hurt', { volume: 0.5 });
+    }
+
     if (this.health <= 0) {
       console.log('[Player] Player died!');
       this.die();
@@ -338,6 +417,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.isAlive = false;
     this.stateMachine.setState(PlayerState.DEAD);
     this.scene.events.emit(GameEvents.PLAYER_DIE);
+
+    // 播放死亡音效
+    if (this.scene.sound.get('death')) {
+      this.scene.sound.play('death', { volume: 0.6 });
+    }
   }
 
   updateInvincibility(delta) {

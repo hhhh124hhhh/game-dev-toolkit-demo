@@ -275,19 +275,23 @@ export class LevelManager {
   createEndPoint() {
     // Boss area at the end
     const bossX = this.levelWidth - 400;
+    const arenaY = GameConfig.height - 100;
 
-    // Boss arena platform
+    // Boss arena platform - 先创建普通矩形，再添加物理
     const arenaPlatform = this.scene.add.rectangle(
       bossX,
-      GameConfig.height - 100,
+      arenaY,
       400,
       32,
       0x553c9a
     );
+    this.scene.physics.add.existing(arenaPlatform);
+    arenaPlatform.body.setAllowGravity(false);
+    arenaPlatform.body.setImmovable(true);
     this.platforms.add(arenaPlatform);
 
-    // Spawn boss
-    const boss = new Boss(this.scene, bossX, GameConfig.height - 200);
+    // Spawn boss - 在竞技场平台正上方，确保不会卡在墙里
+    const boss = new Boss(this.scene, bossX, arenaY - 80);
     boss.setPlayer(this.player);
     this.enemies.add(boss);
     this.boss = boss;

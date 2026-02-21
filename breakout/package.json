@@ -13,6 +13,7 @@
     "phaser": "^3.70.0"
   },
   "devDependencies": {
+    "jsdom": "^28.1.0",
     "vite": "^5.0.0",
     "vitest": "^1.6.0"
   }

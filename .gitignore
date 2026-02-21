@@ -1,6 +1,9 @@
 # 敏感文件（含外部路径）
 test_asset_generator.py
 
+# 测试计划文档（不推送）
+游戏开发技能测试计划-塔防游戏.md
+
 # 依赖
 node_modules/
 

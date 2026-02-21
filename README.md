@@ -38,6 +38,53 @@ npm install
 npm run dev
 ```
 
+### [像素风横板冒险游戏](./像素风横板冒险游戏-简单战斗-线性关卡)
+**横版动作冒险 - 平台跳跃**
+
+一款像素风格的横版动作冒险游戏，融合平台跳跃与简单战斗系统。
+
+- **技术栈**: Phaser 3 + Vite + TypeScript
+- **特点**:
+  - 线性关卡设计
+  - 简单战斗系统
+  - 完整的场景管理
+  - 本地高分存储
+
+```bash
+cd 像素风横板冒险游戏-简单战斗-线性关卡
+npm install
+npm run dev
+```
+
+### [Pixel Tower Defense](./pixel-tower-defense)
+**像素风塔防游戏**
+
+一款像素风格的塔防游戏，支持单人及多人对战模式。
+
+- **技术栈**: Phaser 3 + Vite + TypeScript + Socket.io
+- **特点**:
+  - 像素风视觉设计
+  - 多人功能预留
+  - Vitest 测试框架
+  - Express 后端服务
+
+```bash
+cd pixel-tower-defense
+npm install
+npm run dev
+```
+
+### [RetroRampage](./RetroRampage)
+**Wolfenstein 3D 风格 FPS 教程**
+
+使用 Swift 5 开发的复古 FPS 游戏，基于 Wolfenstein 3D 风格。
+
+- **技术栈**: Swift 5
+- **特点**:
+  - 完整教程源码
+  - 视频教程系列
+  - 光线投射渲染
+
 ## 🛠️ 技术栈
 
 - **游戏引擎**: [Phaser 3](https://phaser.io/)
@@ -64,7 +111,7 @@ cd game-dev-toolkit-demo
 
 2. 选择一个游戏并运行
 ```bash
-cd neon-fall-100  # 或 cd pong
+cd neon-fall-100  # 或 cd pong, cd pixel-tower-defense 等
 npm install
 npm run dev
 ```

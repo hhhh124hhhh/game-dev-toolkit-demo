@@ -1,0 +1,28 @@
+{
+  "name": "pixel-tower-defense",
+  "version": "1.0.0",
+  "description": "A pixel-style tower defense game with multiplayer support",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "server": "node server/index.js"
+  },
+  "dependencies": {
+    "phaser": "^3.70.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0",
+    "jsdom": "^24.0.0"
+  },
+  "optionalDependencies": {
+    "socket.io": "^4.7.0",
+    "socket.io-client": "^4.7.0",
+    "express": "^4.18.0"
+  }
+}

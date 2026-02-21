@@ -1,0 +1,20 @@
+{
+  "name": "\u50cf\u7d20\u98ce\u6a2a\u677f\u5192\u9669\u6e38\u620f-\u7b80\u5355\u6218\u6597-\u7ebf\u6027\u5173\u5361",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "playwright test",
+    "test:setup": "python ~/.claude/skills/game-automation-testing/scripts/run_tests.py --setup-only"
+  },
+  "dependencies": {
+    "phaser": "^3.70.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "@playwright/test": "^1.40.0"
+  },
+  "description": "A card game with pixel art style"
+}

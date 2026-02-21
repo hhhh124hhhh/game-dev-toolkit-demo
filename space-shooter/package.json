@@ -1,0 +1,20 @@
+{
+  "name": "space-shooter",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "太空射击游戏 - Phaser 3",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "phaser": "^3.70.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0"
+  }
+}

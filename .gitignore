@@ -26,3 +26,6 @@ npm-debug.log*
 # 构建产物
 dist/
 build/
+
+# 压缩包
+*.zip
